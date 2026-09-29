@@ -85,7 +85,7 @@ public class OrdersDAO {
 
     public List<Orders> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Orders", Orders.class).list();
+            return session.createQuery("SELECT o FROM Orders o JOIN FETCH o.user ORDER BY o.id DESC", Orders.class).list();
         }
     }
 

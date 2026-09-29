@@ -25,6 +25,11 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        if (args.length > 0 && (args[0].equalsIgnoreCase("web") || args[0].equalsIgnoreCase("--web"))) {
+            com.ecommerce.web.WebServer.main(args);
+            return;
+        }
+
         System.out.println("========================================");
         System.out.println("   Hibernate E-Commerce Application    ");
         System.out.println("========================================");

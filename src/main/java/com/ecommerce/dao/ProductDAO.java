@@ -54,19 +54,19 @@ public class ProductDAO {
 
     public List<Product> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Product p WHERE p.deleted = false", Product.class).list();
+            return session.createQuery("SELECT p FROM Product p JOIN FETCH p.category WHERE p.deleted = false ORDER BY p.id ASC", Product.class).list();
         }
     }
 
     public List<Product> findAllIncludingDeleted() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Product", Product.class).list();
+            return session.createQuery("SELECT p FROM Product p JOIN FETCH p.category ORDER BY p.id ASC", Product.class).list();
         }
     }
 
     public List<Product> findByCategory(Long categoryId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Product p WHERE p.category.id = :catId AND p.deleted = false", Product.class)
+            return session.createQuery("SELECT p FROM Product p JOIN FETCH p.category WHERE p.category.id = :catId AND p.deleted = false", Product.class)
                     .setParameter("catId", categoryId)
                     .list();
         }
